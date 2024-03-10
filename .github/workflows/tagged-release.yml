@@ -41,8 +41,8 @@ jobs:
           pkg-config \
           libutempter-dev \
           build-essential"
-      - run: "sh .github/travis/before-install.sh"
-      - run: "sh .github/travis/build.sh"
+      # - run: "sh .github/travis/before-install.sh"
+      # - run: "sh .github/travis/build.sh"
       - run: "make dist"
 
       - uses: "marvinpinto/action-automatic-releases@latest"
