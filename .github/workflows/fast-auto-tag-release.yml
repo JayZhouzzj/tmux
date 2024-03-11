@@ -1,9 +1,9 @@
-name: "Fast Auto Tag and Release for Testing"
+name: Fast Auto Tag and Release (Testing)
 
 on:
   schedule:
-    # Test: run every 5 minutes
-    - cron: "*/5 * * * *"
+    # Test: run every minute
+    - cron: "*/1 * * * *"
 
 jobs:
   gh_tagged_release:
