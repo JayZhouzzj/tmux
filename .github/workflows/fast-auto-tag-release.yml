@@ -19,7 +19,7 @@ jobs:
       - name: Increment version and update file
         run: |
           # Extract the current version from configure.ac
-          VERSION=$(grep -oP 'AC_INIT\(\[tmux\], \K[0-9]+\.[0-9]+(?=\))' configure.ac)
+          VERSION=$(grep 'AC_INIT(\[tmux\],' configure.ac | sed -n 's/.*AC_INIT(\[tmux\], \([next-]*[0-9]*\.[0-9]*\)).*/\1/p')
           echo "Current version: $VERSION"
 
           # Increment the minor version
@@ -48,10 +48,11 @@ jobs:
 
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  gh_tagged_release:
+  release:
+    needs: update-tag
     runs-on: "ubuntu-latest"
-    env:
-      JEST_VERBOSE: ${{ secrets.JEST_VERBOSE }}
+    # env:
+    #   JEST_VERBOSE: ${{ secrets.JEST_VERBOSE }}
 
     steps:
       - name: "Checkout source code"
