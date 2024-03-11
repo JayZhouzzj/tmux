@@ -34,7 +34,13 @@ jobs:
 
           # Set environment variable to use in subsequent steps
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
-          echo "Tag=$TAG" >> $GITHUB_ENV
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Create tag
+        run: |
+          git tag -a "v$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          git push
 
       - name: Commit changes
         run: |
@@ -42,12 +48,6 @@ jobs:
           git config user.email "actions@github.com"
           git add configure.ac
           git commit -m "Increment version to $NEXT_VERSION"
-
-      - name: Create tag
-        run: |
-          git tag -a "v$TAG" -m "Release v$TAG"
-          git push origin "v$TAG"
-          git push
 
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
