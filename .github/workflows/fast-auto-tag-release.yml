@@ -36,6 +36,11 @@ jobs:
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
           echo "TAG=$TAG" >> $GITHUB_ENV
 
+      - name: Config git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
       - name: Create tag
         run: |
           git tag -a "v$TAG" -m "Release $TAG"
@@ -44,8 +49,6 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
           git add configure.ac
           git commit -m "Increment version to $NEXT_VERSION"
 
