@@ -1,0 +1,13 @@
+name: Periodic Tagging for Realeases
+
+on:
+  schedule:
+    # Test: run every 5 minutes
+    - cron: "*/5 * * * *"
+
+jobs:
+  test-schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check current time
+        run: date

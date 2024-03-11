@@ -2,8 +2,8 @@ name: Fast Auto Tag and Release (Testing)
 
 on:
   schedule:
-    # Test: run every minute
-    - cron: "*/1 * * * *"
+    # Test: run every 5 minutes
+    - cron: "*/5 * * * *"
 
 jobs:
   test-schedule:
