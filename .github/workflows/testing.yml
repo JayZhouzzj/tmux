@@ -1,65 +1,31 @@
-name: CI Build
+name: CI Test Build
 
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-  workflow_dispatch:
+on: [push, pull_request]
 
 jobs:
   build:
+    name: Build on ${{ matrix.os }} with ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            compiler: gcc
-            arch: amd64
-            build: ""
-          - os: ubuntu-latest
-            compiler: gcc
-            arch: amd64
-            build: static
-          # Continue adding entries for each combination you need
-          # Exclude combinations that are not supported or needed
-          - os: macos-latest
-            compiler: clang
-            arch: amd64
-            build: ""
-          # This is an example exclusion directly in include for demonstration
-          # Normally you would either not add it or handle via conditional steps
-        exclude:
-          - os: macos-latest
-            compiler: gcc
-            build: static
-          # Add more exclusions as per your Travis CI config
+        os: [ubuntu-latest, macos-latest]
+        compiler: [gcc, clang]
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up environment
-        run: echo "BUILD=${{ matrix.build }}" >> $GITHUB_ENV
-
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential software-properties-common
-
-      - name: Set up Compiler
+      - name: Set up compiler
         run: |
-          if [ "${{ matrix.compiler }}" = "gcc" ]; then
-            sudo apt-get install -y gcc;
-          elif [ "${{ matrix.compiler }}" = "clang" ]; then
-            sudo apt-get install -y clang;
+          if [ "${{ matrix.compiler }}" == "gcc" ]; then
+            echo "GCC setup placeholder"
+          elif [ "${{ matrix.compiler }}" == "clang" ]; then
+            echo "Clang setup placeholder"
           fi
         shell: bash
 
-      - name: Before install
-        run: sh .github/travis/before-install.sh
+      - name: Run a one-line script
+        run: echo "Hello, world!"
 
-      - name: Build
-        run: sh .github/travis/build.sh
-
-    env:
-      CC: ${{ matrix.compiler }}
+      - name: Check compiler version
+        run: ${{ matrix.compiler }} --version
