@@ -1,4 +1,4 @@
-name: Fast Auto Tag and Release (Testing)
+name: auto-tagging
 
 on:
   # schedule:
